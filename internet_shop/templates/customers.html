@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Покупатели</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+</head>
+<body>
+<h1>Все покупатели</h1>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Ник</th>
+        <th>Почта</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Номер телефона</th>
+        <th>Адрес</th>
+        <th>Баллы лояльности</th>
+        <th>Активен</th>
+        <th>Дата регистрации</th>
+        <th>Дата последнего входа</th>
+    </tr>
+    {% for customer in list_of_all_customers %}
+    <tr>
+        <td>{{ customer.id }}</td>
+        <td>{{ customer.username }}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.first_name }}</td>
+        <td>{{ customer.last_name }}</td>
+        <td>{{ customer.phone_number }}</td>
+        <td>{{ customer.address }}</td>
+        <td>{{ customer.loyalty_points }}</td>
+        <td>{{ customer.is_active }}</td>
+        <td>{{ customer.date_joined }}</td>
+        <td>{{ customer.last_login }}</td>
+
+    </tr>
+    {% endfor %}
+</table>
+</body>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказы</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+</head>
+<body>
+<h1>Все категории</h1>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Название категории</th>
+        <th>Описание категории</th>
+        <th>Дата создания</th>
+        <th>Дата обновления</th>
+    </tr>
+    {% for category in list_of_all_categories %}
+    <tr>
+        <td>{{ category.id }}</td>
+        <td>{{ category.name }}</td>
+        <td>{{ category.description }}</td>
+        <td>{{ category.created_at }}</td>
+        <td>{{ category.updated_at }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
