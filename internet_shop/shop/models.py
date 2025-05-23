@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
@@ -48,7 +50,7 @@ class Product(models.Model):
     updated_at = models.DateTimeField("Дата обновления", auto_now=True)
 
     class Meta:
-        ordering = ["-created_at", "name"]
+        ordering = ["created_at", "name"]
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
 
@@ -76,3 +78,61 @@ class Customer(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.username})"
+
+class Order(models.Model):
+    """Модель заказа"""
+    customer = models.ForeignKey(
+        Customer,
+        on_delete=models.CASCADE,
+        related_name="orders",
+        verbose_name="Покупатель"
+    )
+    created_at = models.DateTimeField("Дата создания", auto_now_add=True)
+    updated_at = models.DateTimeField("Дата обновления", auto_now=True)
+    is_paid = models.BooleanField("Оплачен", default=False)
+    is_delivered = models.BooleanField("Доставлен", default=False)
+    total_amount = models.DecimalField(
+        "Сумма заказа",
+        max_digits=10,
+        decimal_places=2,
+        default=0
+    )
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = "Заказ"
+        verbose_name_plural = "Заказы"
+
+    def __str__(self):
+        return f"Заказ #{self.id} от {self.customer.username}"
+
+
+class OrderItem(models.Model):
+    """Модель позиции в заказе"""
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name="items",
+        verbose_name="Заказ"
+    )
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.PROTECT,
+        verbose_name="Товар"
+    )
+    quantity = models.PositiveIntegerField("Количество", validators=[MinValueValidator(1)])
+    price_at_order = models.DecimalField(
+        "Цена на момент заказа",
+        max_digits=10,
+        decimal_places=2
+    )
+
+    class Meta:
+        verbose_name = "Позиция заказа"
+        verbose_name_plural = "Позиции заказа"
+
+    def __str__(self):
+        return f"{self.product.name} x {self.quantity}"
+
+    def get_total_price(self):
+        return self.quantity * self.price_at_order
