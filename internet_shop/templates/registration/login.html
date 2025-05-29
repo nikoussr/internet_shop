@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - Канцелярия Онлайн</title>
+    <style>
+        * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+
+ body {
+     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+     line-height: 1.6;
+     color: #333;
+ }
+
+ .container {
+     max-width: 1200px;
+     margin: 0 auto;
+     padding: 0 20px;
+ }
+
+ /* Навигация */
+ .navbar {
+     background: #fff;
+     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+     position: sticky;
+     top: 0;
+     z-index: 1000;
+ }
+
+ .navbar-brand {
+     font-size: 1.5rem;
+     font-weight: bold;
+     color: #010101;
+     text-decoration: none;
+     display: flex;
+     align-items: center;
+     padding: 15px;
+ }
+
+         .icon {
+             margin-right: 0.5rem;
+             font-size: 1.2rem;
+         }
+
+         /* Основной контейнер */
+         .main-container {
+             display: flex;
+             min-height: 100vh;
+         }
+
+         /* Левая часть с формой */
+         .form-section {
+             flex: 1;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             padding: 2rem;
+             min-height: 100vh;
+         }
+
+         .form-wrapper {
+             width: 100%;
+             max-width: 400px;
+         }
+
+         .form-header {
+             text-align: center;
+             margin-bottom: 2rem;
+         }
+
+         .form-icon {
+            /* Градиент для круга с ключем */
+             width: 80px;
+             height: 80px;
+             background: linear-gradient(45deg, #0d6efd, #6610f2);
+             border-radius: 50%;
+             display: inline-flex;
+             align-items: center;
+             justify-content: center;
+             margin-bottom: 1rem;
+             font-size: 2rem;
+         }
+
+         .form-title {
+             font-size: 2rem;
+             font-weight: 700;
+             color: #212529;
+             margin-bottom: 0.5rem;
+         }
+
+         .form-subtitle {
+             color: #6c757d;
+             font-size: 1rem;
+         }
+
+         /* Карточка формы */
+         .form-card {
+             background: white;
+             border-radius: 0.5rem;
+             box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+             padding: 2rem;
+             border: none;
+         }
+
+         /* Поля формы */
+         .form-group {
+             margin-bottom: 1.5rem;
+         }
+
+         .form-label {
+             display: block;
+             margin-bottom: 0.5rem;
+             font-weight: 600;
+             color: #212529;
+         }
+
+         .label-icon {
+             margin-right: 0.5rem;
+         }
+
+         .input-group {
+             position: relative;
+             display: flex;
+         }
+
+         .input-icon {
+             background: #f8f9fa;
+             border: 1px solid #dee2e6;
+             border-right: none;
+             border-radius: 0.375rem 0 0 0.375rem;
+             padding: 0.75rem;
+             display: flex;
+             align-items: center;
+             color: #6c757d;
+         }
+
+         .form-control {
+             flex: 1;
+             padding: 0.75rem;
+             border: 1px solid #dee2e6;
+             border-left: none;
+             border-radius: 0 0.375rem 0.375rem 0;
+             font-size: 1rem;
+         }
+
+         .form-control:focus {
+             /* Обводка при клике на форму */
+             outline: none;
+             border-color: #0d6efd;
+             box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+         }
+
+         /* Кнопка входа */
+         .btn-login {
+             width: 100%;
+             padding: 0.75rem;
+             background: linear-gradient(45deg, #0d6efd, #6610f2);
+             color: white;
+             border: none;
+             border-radius: 0.375rem;
+             font-size: 1rem;
+             font-weight: 600;
+             cursor: pointer;
+             transition: all 0.3s ease;
+             margin-bottom: 1rem;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+         }
+
+         .btn-login:hover {
+             background: linear-gradient(45deg, #0b5ed7, #5a0fc9);
+         }
+
+         .btn-icon {
+             margin-right: 0.5rem;
+         }
+
+         /* Ссылка на регистрацию */
+         .signup-section {
+             text-align: center;
+         }
+
+         .signup-text {
+             color: #6c757d;
+             margin-bottom: 0.25rem;
+         }
+
+         .signup-link {
+             color: #0d6efd;
+             text-decoration: none;
+             font-weight: 600;
+         }
+
+         .signup-link:hover {
+             color: #0b5ed7;
+             text-decoration: underline;
+         }
+
+         /* Правая часть с изображением */
+         .image-section {
+             flex: 1;
+             background: linear-gradient(45deg, #0d6efd 0%, #6610f2 100%);
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             color: white;
+             padding: 2rem;
+         }
+
+         .image-content {
+             text-align: center;
+             max-width: 500px;
+         }
+
+         .image-icon {
+             font-size: 5rem;
+             opacity: 0.9;
+             margin-bottom: 1.5rem;
+         }
+
+         .image-title {
+             font-size: 2rem;
+             font-weight: 700;
+             margin-bottom: 1rem;
+         }
+
+         .image-subtitle {
+             font-size: 1.125rem;
+             margin-bottom: 2rem;
+             opacity: 0.9;
+         }
+
+         .features-list {
+             text-align: left;
+             max-width: 400px;
+             margin: 0 auto;
+         }
+
+         .feature-item {
+             display: flex;
+             align-items: center;
+             margin-bottom: 1rem;
+         }
+
+         .feature-icon {
+             margin-right: 1rem;
+             font-size: 1.2rem;
+         }
+
+         /* Иконки (используем Unicode символы) */
+         .icon-login::before { content: '🔑'; }
+         .icon-bag::before { content: '🛍️'; }
+         .icon-check::before { content: '✅'; }
+
+         /* Адаптивность */
+         @media (max-width: 992px) {
+             .main-container {
+                 flex-direction: column;
+             }
+
+             .image-section {
+                /* Когда экран маленький, то убираем  секцию с картинкой */
+                 display: none;
+             }
+
+             .form-section {
+                 min-height: 100vh;
+             }
+         }
+
+         @media (max-width: 768px) {
+             .form-wrapper {
+                 max-width: 100%;
+             }
+
+             .form-card {
+                 padding: 1.5rem;
+             }
+
+             .form-title {
+                 font-size: 1.75rem;
+             }
+
+             .navbar .container {
+                 padding: 0 1rem;
+             }
+         }
+
+         @media (max-width: 480px) {
+             .form-section {
+                 padding: 1rem;
+             }
+
+             .form-card {
+                 padding: 1rem;
+             }
+
+             .form-title {
+                 font-size: 1.5rem;
+             }
+         }
+
+         /* Анимации */
+         @keyframes fadeIn {
+             from {
+                 opacity: 0;
+                 transform: translateY(20px);
+             }
+             to {
+                 opacity: 1;
+                 transform: translateY(0);
+             }
+         }
+
+    </style>
+</head>
+<body>
+<!-- Навигация -->
+<nav class="navbar">
+    <div class="container">
+        <a href="/" class="navbar-brand">
+            Канцелярия Онлайн
+        </a>
+    </div>
+</nav>
+
+<!-- Основной контент -->
+<div class="main-container">
+    <!-- Левая часть с формой -->
+    <div class="form-section">
+        <div class="form-wrapper">
+            <div class="form-header">
+                <div class="form-icon">
+                    <span class="icon-login"></span>
+                </div>
+                <h2 class="form-title">Добро пожаловать!</h2>
+                <p class="form-subtitle">Войдите в свой аккаунт, чтобы продолжить покупки</p>
+            </div>
+
+            <div class="form-card">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="username" class="form-label">
+                            Имя пользователя
+                        </label>
+                        <div class="input-group">
+                            <input type="text" id="username" name="username" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">
+                            Пароль
+                        </label>
+                        <div class="input-group">
+                            <input type="password" id="password" name="password" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-login">
+                        Войти
+                    </button>
+
+                    <div class="signup-section">
+                        <p class="signup-text">Нет аккаунта?</p>
+                        <a href="/accounts/signup/" class="signup-link">Зарегистрироваться</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Правая часть с изображением -->
+    <div class="image-section">
+        <div class="image-content">
+            <div class="image-icon icon-bag"></div>
+            <h3 class="image-title">Все для офиса и школы</h3>
+            <p class="image-subtitle">
+                Качественная канцелярия с доставкой на дом.
+                Широкий ассортимент товаров для работы и учебы.
+            </p>
+            <div class="features-list">
+                <div class="feature-item">
+                    <span class="feature-icon icon-check"></span>
+                    <span>Быстрая доставка по Томску</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon icon-check"></span>
+                    <span>Гарантия качества товаров</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon icon-check"></span>
+                    <span>Удобные способы оплаты</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
