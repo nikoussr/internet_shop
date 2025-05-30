@@ -62,7 +62,7 @@
 <h1>Все товары</h1>
 <form action="{% url 'search' %}" method="GET">
     {% csrf_token %}
-    <input name="q" type="text" placeholder="Введите название товара">
+    <input name="qwe" type="text" placeholder="Введите название товара">
 </form>
 <table>
     <tr>
@@ -76,7 +76,7 @@
         <th>Скидка</th>
         <th>Доступен</th>
     </tr>
-    {% for product in list_of_all_products %}
+    {% for product in all_products %}
     <tr>
         <td>{{ product.id }}</td>
         <td>{{ product.name }}</td>

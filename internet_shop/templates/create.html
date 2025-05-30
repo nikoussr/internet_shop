@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Оформление заказа - Канцелярия Онлайн</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+<!-- Навигация -->
+<nav class="navbar">
+    <div class="container">
+        <div class="navbar-container">
+            <a href="/" class="navbar-brand">Канцелярия Онлайн</a>
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">☰</button>
+            <ul class="navbar-nav" id="navbarNav">
+                <li><a href="#" class="nav-link">Контакты</a></li>
+                <li><a href="#" class="nav-link">О нас</a></li>
+                <li><a href="{% url 'cart:cart_detail' %}" class="nav-link">Корзина</a></li>
+                {% if user.is_authenticated %}
+                <li class="user-dropdown">
+                    <button class="dropdown-toggle" onclick="toggleDropdown()">
+                        <span>{{ user.username }}</span>
+                        {% if user.is_staff %}
+                        <span class="badge_admin">Admin</span>
+                        {% endif %}
+                        <span style="margin-left: 5px;">▼</span>
+                    </button>
+                    <div class="dropdown-menu" id="userDropdown">
+                        <div class="dropdown-header">Профиль</div>
+                        <div class="dropdown-item">
+                            <small>Email:</small><br><strong>{{ user.email|default:"Не указан" }}</strong>
+                        </div>
+                        <div class="dropdown-item">
+                            <small>Статус:</small><br><strong>{{ user.is_staff|yesno:"Администратор,Пользователь" }}</strong>
+                        </div>
+                        <div class="dropdown-item">
+                            <small>Дата регистрации:</small><br><strong>{{ user.date_joined|date:"d.m.Y" }}</strong>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-btn">Выйти</button>
+                        </form>
+                    </div>
+                </li>
+                {% else %}
+                <li><a class="nav-link" href="{% url 'login' %}">Войти</a></li>
+                <li><a class="nav-link" href="{% url 'signup' %}">Регистрация</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Основной контент -->
+<section class="section">
+    <div class="container">
+        <h1 class="section-title">Оформление заказа</h1>
+
+        <div class="order-info cart-container">
+            <h3>Ваш заказ</h3>
+            <ul>
+                {% for item in cart %}
+                <li>{{ item.quantity }} шт. x {{ item.product.name }} — <span>{{ item.total_price }} ₽</span></li>
+                {% endfor %}
+            </ul>
+            <p><strong>Всего: {{ cart.get_total_price }} ₽</strong></p>
+        </div>
+
+        <form method="post" class="order-form cart-container" style="margin-top: 2rem; padding: 2rem;">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p><input type="submit" value="Заказать" class="btn btn-primary btn-large"></p>
+        </form>
+
+        <div style="margin-top: 2rem;">
+            <a href="/" class="btn btn-outline-primary">Вернуться на главную</a>
+        </div>
+    </div>
+</section>
+
+<!-- Подвал -->
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2025 Канцелярия Онлайн. Все права защищены.</p>
+        <p>Телефон: +7 (951) 167-76-11 | Email: zog1@tpu.ru</p>
+    </div>
+</footer>
+
+<script>
+    function toggleDropdown() {
+        document.getElementById('userDropdown').classList.toggle('show');
+    }
+
+    function toggleMobileMenu() {
+        document.getElementById('navbarNav').classList.toggle('show');
+    }
+
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById('userDropdown');
+        const toggle = event.target.closest('.dropdown-toggle');
+        if (!toggle && dropdown.classList.contains('show')) {
+            dropdown.classList.remove('show');
+        }
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('navbarNav').classList.remove('show');
+        });
+    });
+</script>
+
+</body>
+</html>

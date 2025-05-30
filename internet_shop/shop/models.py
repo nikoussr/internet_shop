@@ -81,12 +81,7 @@ class Customer(models.Model):
 
 class Order(models.Model):
     """Модель заказа"""
-    customer = models.ForeignKey(
-        Customer,
-        on_delete=models.CASCADE,
-        related_name="orders",
-        verbose_name="Покупатель"
-    )
+    customer = models.CharField("Логин пользователя", max_length=50)
     created_at = models.DateTimeField("Дата создания", auto_now_add=True)
     updated_at = models.DateTimeField("Дата обновления", auto_now=True)
     is_paid = models.BooleanField("Оплачен", default=False)
@@ -104,7 +99,7 @@ class Order(models.Model):
         verbose_name_plural = "Заказы"
 
     def __str__(self):
-        return f"Заказ #{self.id} от {self.customer.username}"
+        return f"Заказ #{self.id} от {self.customer}"
 
 
 class OrderItem(models.Model):

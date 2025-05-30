@@ -135,7 +135,7 @@
 
             <div class="cart-actions">
                 <a href="/" class="btn btn-outline-primary">Продолжить покупки</a>
-                <button class="btn btn-outline-primary">Оформить заказ</button>
+                <a href="{% url 'orders:order_create' %}" class="btn btn-outline-primary">Оформить заказ</a>
             </div>
         </div>
         {% else %}

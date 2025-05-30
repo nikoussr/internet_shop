@@ -27,13 +27,18 @@ class ProductListView(ListView):
     model = Product
     context_object_name = "list_of_all_products"
 
+class AllProducts(ListView):
+    template_name = 'products.html'
+    model = Product
+    context_object_name = "all_products"
+
 class SearchView(ListView):
     template_name = "search.html"
     model = Product
     context_object_name = 'search_product'
 
     def get_queryset(self):
-        query = self.request.GET.get('q')
+        query = self.request.GET.get('qwe')
         return Product.objects.filter(
             Q(name__icontains=query)
         ).order_by('name').reverse()
